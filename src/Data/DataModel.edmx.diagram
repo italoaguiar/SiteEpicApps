@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3fd83087552d48feb7b28fd136546a0b" Name="Diagram1">
+        <EntityTypeShape EntityType="Database.Apps" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.Languages" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.Translations" Width="1.5" PointX="5.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.Users" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.UserType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.Votes" Width="1.5" PointX="7.5" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.Words" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="Database.FK__Words__App__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.FK_Users_App" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.FK__Translati__Langu__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.FK__Translatio__Word__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.FK__Votes__Translati__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.FK_Users_AccountType" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

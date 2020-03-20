@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Apps">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nchar" MaxLength="50" />
+          <Property Name="Website" Type="nchar" MaxLength="120" />
+          <Property Name="PublicKey" Type="nchar" MaxLength="80" />
+          <Property Name="SecureKey" Type="nchar" MaxLength="100" />
+          <Property Name="IsEnabledForApi" Type="tinyint" />
+          <Property Name="MaxRequestsByDay" Type="int" />
+          <Property Name="Logo" Type="nchar" MaxLength="180" />
+        </EntityType>
+        <EntityType Name="Languages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CultureName" Type="nchar" MaxLength="8" />
+          <Property Name="DisplayName" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="ISO639x" Type="nchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="Translations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Word" Type="int" Nullable="false" />
+          <Property Name="Value" Type="text" Nullable="false" />
+          <Property Name="Language" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountType" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="email" Type="nchar" MaxLength="160" />
+          <Property Name="emailVerified" Type="tinyint" />
+          <Property Name="gender" Type="nchar" MaxLength="10" />
+          <Property Name="profileLink" Type="nchar" MaxLength="200" />
+          <Property Name="locale" Type="nchar" MaxLength="10" />
+          <Property Name="PictureUrl" Type="nchar" MaxLength="200" />
+          <Property Name="AppID" Type="int" Nullable="false" />
+          <Property Name="password" Type="nchar" MaxLength="120" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Provider" Type="nchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Votes">
+          <Key>
+            <PropertyRef Name="Ip" />
+            <PropertyRef Name="Translation_Id" />
+          </Key>
+          <Property Name="Vote" Type="int" Nullable="false" />
+          <Property Name="Ip" Type="nchar" MaxLength="16" Nullable="false" />
+          <Property Name="Translation_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Words">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="text" Nullable="false" />
+          <Property Name="App" Type="int" Nullable="false" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Translati__Langu__3B75D760">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+          <End Role="Translations" Type="Self.Translations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Translations">
+              <PropertyRef Name="Language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Translatio__Word__3A81B327">
+          <End Role="Words" Type="Self.Words" Multiplicity="1" />
+          <End Role="Translations" Type="Self.Translations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Words">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Translations">
+              <PropertyRef Name="Word" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Votes__Translati__3F466844">
+          <End Role="Translations" Type="Self.Translations" Multiplicity="1" />
+          <End Role="Votes" Type="Self.Votes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Translations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Votes">
+              <PropertyRef Name="Translation_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Words__App__36B12243">
+          <End Role="Apps" Type="Self.Apps" Multiplicity="1" />
+          <End Role="Words" Type="Self.Words" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apps">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Words">
+              <PropertyRef Name="App" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_AccountType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="AccountType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_App">
+          <End Role="Apps" Type="Self.Apps" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apps">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="AppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseStoreContainer">
+          <EntitySet Name="Apps" EntityType="Self.Apps" Schema="apiuser" store:Type="Tables" />
+          <EntitySet Name="Languages" EntityType="Self.Languages" Schema="apiuser" store:Type="Tables" />
+          <EntitySet Name="Translations" EntityType="Self.Translations" Schema="apiuser" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="apiuser" store:Type="Tables" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" Schema="apiuser" store:Type="Tables" />
+          <EntitySet Name="Votes" EntityType="Self.Votes" Schema="apiuser" store:Type="Tables" />
+          <EntitySet Name="Words" EntityType="Self.Words" Schema="apiuser" store:Type="Tables" />
+          <AssociationSet Name="FK__Translati__Langu__3B75D760" Association="Self.FK__Translati__Langu__3B75D760">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="Translations" EntitySet="Translations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Translatio__Word__3A81B327" Association="Self.FK__Translatio__Word__3A81B327">
+            <End Role="Words" EntitySet="Words" />
+            <End Role="Translations" EntitySet="Translations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Votes__Translati__3F466844" Association="Self.FK__Votes__Translati__3F466844">
+            <End Role="Translations" EntitySet="Translations" />
+            <End Role="Votes" EntitySet="Votes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Words__App__36B12243" Association="Self.FK__Words__App__36B12243">
+            <End Role="Apps" EntitySet="Apps" />
+            <End Role="Words" EntitySet="Words" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_AccountType" Association="Self.FK_Users_AccountType">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_App" Association="Self.FK_Users_App">
+            <End Role="Apps" EntitySet="Apps" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Apps">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="120" FixedLength="true" Unicode="true" />
+          <Property Name="PublicKey" Type="String" MaxLength="80" FixedLength="true" Unicode="true" />
+          <Property Name="SecureKey" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="IsEnabledForApi" Type="Byte" />
+          <Property Name="MaxRequestsByDay" Type="Int32" />
+          <Property Name="Logo" Type="String" MaxLength="180" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Words" Relationship="Self.FK__Words__App__36B12243" FromRole="Apps" ToRole="Words" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_App" FromRole="Apps" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Languages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CultureName" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ISO639x" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Translations" Relationship="Self.FK__Translati__Langu__3B75D760" FromRole="Languages" ToRole="Translations" />
+        </EntityType>
+        <EntityType Name="Translations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Word" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Language" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Languages" Relationship="Self.FK__Translati__Langu__3B75D760" FromRole="Translations" ToRole="Languages" />
+          <NavigationProperty Name="Words" Relationship="Self.FK__Translatio__Word__3A81B327" FromRole="Translations" ToRole="Words" />
+          <NavigationProperty Name="Votes" Relationship="Self.FK__Votes__Translati__3F466844" FromRole="Translations" ToRole="Votes" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountType" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="160" FixedLength="true" Unicode="true" />
+          <Property Name="emailVerified" Type="Byte" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="profileLink" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="locale" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PictureUrl" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="AppID" Type="Int32" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="120" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Apps" Relationship="Self.FK_Users_App" FromRole="Users" ToRole="Apps" />
+          <NavigationProperty Name="UserType" Relationship="Self.FK_Users_AccountType" FromRole="Users" ToRole="UserType" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Provider" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_AccountType" FromRole="UserType" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Votes">
+          <Key>
+            <PropertyRef Name="Ip" />
+            <PropertyRef Name="Translation_Id" />
+          </Key>
+          <Property Name="Vote" Type="Int32" Nullable="false" />
+          <Property Name="Ip" Type="String" MaxLength="16" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Translation_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Translations" Relationship="Self.FK__Votes__Translati__3F466844" FromRole="Votes" ToRole="Translations" />
+        </EntityType>
+        <EntityType Name="Words">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="App" Type="Int32" Nullable="false" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Apps" Relationship="Self.FK__Words__App__36B12243" FromRole="Words" ToRole="Apps" />
+          <NavigationProperty Name="Translations" Relationship="Self.FK__Translatio__Word__3A81B327" FromRole="Words" ToRole="Translations" />
+        </EntityType>
+        <Association Name="FK__Words__App__36B12243">
+          <End Role="Apps" Type="Self.Apps" Multiplicity="1" />
+          <End Role="Words" Type="Self.Words" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apps">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Words">
+              <PropertyRef Name="App" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_App">
+          <End Role="Apps" Type="Self.Apps" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apps">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="AppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Translati__Langu__3B75D760">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+          <End Role="Translations" Type="Self.Translations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Translations">
+              <PropertyRef Name="Language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Translatio__Word__3A81B327">
+          <End Role="Words" Type="Self.Words" Multiplicity="1" />
+          <End Role="Translations" Type="Self.Translations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Words">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Translations">
+              <PropertyRef Name="Word" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Votes__Translati__3F466844">
+          <End Role="Translations" Type="Self.Translations" Multiplicity="1" />
+          <End Role="Votes" Type="Self.Votes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Translations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Votes">
+              <PropertyRef Name="Translation_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_AccountType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="AccountType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="epic_apiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Apps" EntityType="Self.Apps" />
+          <EntitySet Name="Languages" EntityType="Self.Languages" />
+          <EntitySet Name="Translations" EntityType="Self.Translations" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" />
+          <EntitySet Name="Votes" EntityType="Self.Votes" />
+          <EntitySet Name="Words" EntityType="Self.Words" />
+          <AssociationSet Name="FK__Words__App__36B12243" Association="Self.FK__Words__App__36B12243">
+            <End Role="Apps" EntitySet="Apps" />
+            <End Role="Words" EntitySet="Words" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_App" Association="Self.FK_Users_App">
+            <End Role="Apps" EntitySet="Apps" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Translati__Langu__3B75D760" Association="Self.FK__Translati__Langu__3B75D760">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="Translations" EntitySet="Translations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Translatio__Word__3A81B327" Association="Self.FK__Translatio__Word__3A81B327">
+            <End Role="Words" EntitySet="Words" />
+            <End Role="Translations" EntitySet="Translations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Votes__Translati__3F466844" Association="Self.FK__Votes__Translati__3F466844">
+            <End Role="Translations" EntitySet="Translations" />
+            <End Role="Votes" EntitySet="Votes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_AccountType" Association="Self.FK_Users_AccountType">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseStoreContainer" CdmEntityContainer="epic_apiEntities">
+          <EntitySetMapping Name="Apps">
+            <EntityTypeMapping TypeName="Database.Apps">
+              <MappingFragment StoreEntitySet="Apps">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="PublicKey" ColumnName="PublicKey" />
+                <ScalarProperty Name="SecureKey" ColumnName="SecureKey" />
+                <ScalarProperty Name="IsEnabledForApi" ColumnName="IsEnabledForApi" />
+                <ScalarProperty Name="MaxRequestsByDay" ColumnName="MaxRequestsByDay" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="Database.Languages">
+              <MappingFragment StoreEntitySet="Languages">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CultureName" ColumnName="CultureName" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="ISO639x" ColumnName="ISO639x" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Translations">
+            <EntityTypeMapping TypeName="Database.Translations">
+              <MappingFragment StoreEntitySet="Translations">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Word" ColumnName="Word" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Database.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="emailVerified" ColumnName="emailVerified" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="profileLink" ColumnName="profileLink" />
+                <ScalarProperty Name="locale" ColumnName="locale" />
+                <ScalarProperty Name="PictureUrl" ColumnName="PictureUrl" />
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserType">
+            <EntityTypeMapping TypeName="Database.UserType">
+              <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Votes">
+            <EntityTypeMapping TypeName="Database.Votes">
+              <MappingFragment StoreEntitySet="Votes">
+                <ScalarProperty Name="Vote" ColumnName="Vote" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
+                <ScalarProperty Name="Translation_Id" ColumnName="Translation_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Words">
+            <EntityTypeMapping TypeName="Database.Words">
+              <MappingFragment StoreEntitySet="Words">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="App" ColumnName="App" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

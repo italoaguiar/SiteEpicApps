@@ -1,0 +1,197 @@
+﻿@using Recaptcha.Web.Mvc;
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - EpicApps</title>
+
+    <!-- Load Roboto font -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+    @Styles.Render("~/Content/css/bootstrap.css")
+    @Styles.Render("~/Content/css/bootstrap-responsive.css")
+    @Styles.Render("~/Content/css/style.css")
+    @Styles.Render("~/Content/css/pluton.css")
+    @Styles.Render("~/Content/css/jquery.bxslider.css")
+    @Styles.Render("~/Content/css/jquery.cslider.css")
+    @Styles.Render("~/Content/css/animate.css")
+    
+
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="@Url.Content("~/Content/images/ico/apple-touch-icon-144.png")">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="@Url.Content("~/Content/images/ico/apple-touch-icon-114.png")">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="@Url.Content("~/Content/images/apple-touch-icon-72.png")">
+    <link rel="apple-touch-icon-precomposed" href="@Url.Content("~/Content/images/ico/apple-touch-icon-57.png")">
+    <link rel="shortcut icon" href="@Url.Content("~/Content/images/ico/favicon.ico")">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container">
+                <a href="#" class="brand">
+                    <img src="~/Content/images/logo.png" width="290" height="50" alt="Logo" />
+                    <!-- This is website logo -->
+                </a>
+                <!-- Navigation button, visible on small resolution -->
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <i class="icon-menu"></i>
+                </button>
+                <!-- Main navigation -->
+                <div class="nav-collapse collapse pull-right">
+                    <ul class="nav" id="top-navigation">
+                        <li class="active"><a href="Home">Home</a></li>                        
+                        @RenderSection("menu", false)
+                        <li><a href="#contact">Contato</a></li>                        
+                    </ul>
+                </div>
+                <!-- End main navigation -->
+            </div>
+        </div>
+    </div>
+    @if (ViewBag.RenderSlider == null || ViewBag.RenderSlider == true)
+    {
+    <div id="home">
+        <!-- Start cSlider -->        
+        <div id="da-slider" class="da-slider">
+            <!-- mask elemet use for masking background image -->
+            <div class="mask"></div>
+            <!-- All slides centred in container element -->
+            <div>
+                <!-- Start first slide -->
+                <div class="da-slide" style="background-image: url(@Url.Content("~/Content/images/l4.png")); background-size:cover; background-attachment:fixed; background-position:center;">
+                    <div class="container">
+                        <h2 class="fittext2">MiniTube</h2>
+                        <h4>Nunca foi tão fácil baixar vídeos do YouTube</h4>
+                        <p>MiniTube é o mais novo aplicativo lançado pela EpicApps. Com ele você consegue assistir a qualquer vídeo do youtube e baixa-lo para seu computador. Além de baixar, você ainda consegue postar comentários, dar like ou dislike nos vídeos, inscrever-se nos canais e muitos mais.</p>
+                        <a href="#" class="da-link button">Baixe agora</a>
+                        <div class="da-img">
+                            <img src="@Url.Content("~/Content/images/MiniTubeTablet.png")" alt="image01" width="420">
+                        </div>
+                    </div>
+                </div>
+                <!-- End first slide -->
+                <!-- Start second slide -->
+                <div class="da-slide" style="background-image: url(@Url.Content("~/Content/images/l1.png")); background-size:cover; background-attachment:fixed; background-position:center;">
+                    <div class="container">
+                        <h2>V-browser</h2>
+                        <h4>Simples, fácil e poderoso</h4>
+                        <p>Além de acessar qualquer página da web, V-browser te permite baixar qualquer vídeo da internet. Basta acessar uma página e se houver vídeo, o V-browser irá lhe mostrar.</p>
+                        <a href="http://apps.microsoft.com/windows/en-us/app/v-browser/63ac5c5e-f099-4b99-8650-0b15cb780ade" class="da-link button">Baixe agora na Windows Store</a>
+                        <div class="da-img">
+                            <img src="@Url.Content("~/Content/images/vbrowser.png")" width="420" alt="image02">
+                        </div>
+                    </div>
+                </div>
+                <!-- End second slide -->
+                <!-- Start third slide -->
+                <div class="da-slide" style="background-image: url(@Url.Content("~/Content/images/l5.jpg")); background-size:cover; background-attachment:fixed; background-position:center;">
+                    <div class="container">
+                        <h2>AcheProvas</h2>
+                        <h4>O maior banco de provas do Brasil</h4>
+                        <p>Agora você poderá se preparar para os vestibulares que vem por aí através do AcheProvas. Basta procurar uma prova, fazer o download e bons estudos!</p>
+                        <a href="http://acheprovas.com/aplicativos/#.VXIBVUaupfA" class="da-link button">Baixe agora</a>
+                        <div class="da-img">
+                            <img src="@Url.Content("~/Content/images/acheprovas.png")" width="420" alt="image03">
+                        </div>
+                    </div>
+                </div>
+                <!-- Start third slide -->
+                <!-- Start cSlide navigation arrows -->
+                <div class="da-arrows">
+                    <span class="da-arrows-prev"></span>
+                    <span class="da-arrows-next"></span>
+                </div>
+                <!-- End cSlide navigation arrows -->
+            </div>
+        </div>        
+    </div>
+    }
+    @RenderBody()
+    @if (ViewBag.RenderContact == null|| ViewBag.RenderContact == true)
+    {
+    <div id="contact" class="contact">
+        <div class="section secondary-section">
+            <div class="container">
+                <div class="title">
+                    <h1>Contate-nos</h1>
+                    <p>Deixe suas sugestões, dúvidas, reclamações, pedidos de ajuda. Sua opinião é sempre bem vinda.</p>
+                </div>
+            </div>
+            <div class="map-wrapper">
+                <div class="container">
+                    <div class="row-fluid">
+                        <div class="span5 contact-form center centered">
+                            <h3>Diga Olá</h3>
+                            <div id="successSend" class="alert alert-success invisible">
+                                <strong>Ok!</strong>Recebemos sua mensagem e entraremos em contato assim que possível.
+                            </div>
+                            <div id="errorSend" class="alert alert-error invisible">Ocorreu um erro.</div>
+                            <form id="contact-form" action="Message/New">
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <input class="span12" type="text" id="name" name="name" placeholder="* Seu nome..." />
+                                        <div class="error left-align" id="err-name">Por favor coloque seu nome.</div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <input class="span12" type="email" name="email" id="email" placeholder="* Seu email..." />
+                                        <div class="error left-align" id="err-email">Por favor insira um e-mail válido.</div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <textarea class="span12" name="comment" id="comment" placeholder="* Comentários..."></textarea>
+                                        <div class="error left-align" id="err-comment">Por favor insira seu comentário.</div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls center">
+                                        @Html.Recaptcha()
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <button id="send-mail" class="message-btn">Enviar mensagem</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    }
+    <!-- Contact section edn -->
+    <!-- Footer section start -->
+    <div class="footer">
+        <p>&copy; @DateTime.Now.Year - EpicApps</p>
+    </div>
+    <!-- Footer section end -->
+    <!-- ScrollUp button start -->
+    <div class="scrollup">
+        <a href="#">
+            <i class="icon-up-open"></i>
+        </a>
+    </div>
+    <!-- ScrollUp button end -->
+    <!-- Include javascript -->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+    <!-- css3-mediaqueries.js for IE8 or older -->
+    <!--[if lt IE 9]>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
+

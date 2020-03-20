@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.RenderSlider = false;
+    ViewBag.RenderContact = false;
+}
+@section scripts{
+<script type="text/javascript">
+    
+  
+</script>
+
+}
+<div class="section culture-section" id="service">
+    <div class="container">
+        <!-- Start title section -->
+        <div class="title">
+            <h1>Epicapps Colaborative Translation Tool</h1>
+            <!-- Section's title goes here -->
+            <p>Help EpicApps to translate your favorite app to your native language.</p>
+            <!--Simple description for section goes here. -->
+        </div>
+        <div class="centered" style="max-width: 600px;">
+            <form action="/select_demo.php">
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="centered">
+                            <label for="app">App Name</label>
+                            <select class="" id="app" name="app" style="width:100%">
+                                @foreach (var item in ViewBag.Apps)
+                                {
+                                    <option value="@item.ID">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="centered">
+                            <label for="language">Your Language</label>
+                            <select id="language" name="language" style="width:100%">
+                                @foreach (var item in ViewBag.Languages)
+                                {
+                                    <option value="@item.Id">@item.DisplayName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="translation" class="section custom-section" style="min-height:500px;">
+    <div class="container">
+        <table class="table table-bordered table-hover" style="width:100%">
+            <tr>
+                <td><b>Original (EN-US)</b></td>
+                <td><b>Translation</b></td>
+                <td><b>Rating</b></td>
+            </tr>
+            @{
+                var ef = new epic_apiEntities();
+                foreach (var item in ef.Words.Where(p=> p.App == 10001).ToList())
+                {
+                    <tr>
+                        <td>@item.Nome</td>
+                        <td>Loren Ipsun Dolor</td>
+                        <td>10- 94+</td>
+                    </tr>
+                }
+            }
+           
+        </table>
+    </div>
+</div>
+
